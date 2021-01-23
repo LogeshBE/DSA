@@ -1,0 +1,110 @@
+
+package treeds;
+import java.util.*;
+class Node{
+    int nodeValue;
+    Node lChild;
+    Node rChild;
+    Node(int data){
+    nodeValue=data;}
+}
+class tree{
+    public int[] in(Node root)
+	{   
+	    Node current=root;
+	    ArrayList<Integer> al=new ArrayList<>();
+	    int x=0;
+	    Stack<Node> obj=new Stack<>();
+	    while(true){
+	        if(current!=null){
+                    if(current.lChild!=null)
+                            current.nodeValue=(current.nodeValue)*-1;
+	            obj.push(current);
+	            current=current.lChild;
+	        }
+	        if(current==null){
+                    if(obj.empty()) break;
+	            Node n=obj.pop();
+	            al.add(n.nodeValue);
+	            current=n.rChild;
+	        }
+	    }
+	    int size=al.size();
+	    int[] arr=new int[size];
+	    Iterator<Integer> it=al.iterator();
+	   while(it.hasNext()){
+	       arr[x]=it.next();
+	       x++;
+	   }
+	    return arr;
+        
+	}
+    public int[] post(Node root)
+	{ 
+		Stack<Node> s = new Stack<Node>( );
+		Node current = root;
+        ArrayList<Integer> al=new ArrayList<>();
+        int x=0;
+		while( true ) {
+ 
+			if( current != null ) {
+			    	if( current.rChild != null ) 
+			    		s.push( current.rChild );
+			    	s.push( current );
+                                if(current.lChild==null) current.nodeValue=current.nodeValue+1;
+			    	current = current.lChild;
+			    	continue;
+			}
+ 
+			if( s.isEmpty( ) ) 
+				break;
+			current = s.pop( );
+ 
+			if( current.rChild != null && ! s.isEmpty( ) && current.rChild == s.peek( ) ) {
+				s.pop( );
+				s.push( current );
+				current = current.rChild;
+			} else {
+				   al.add( current.nodeValue );
+				current = null;
+			}
+		}
+		int size=al.size();
+	    int[] arr=new int[size];
+	   // arr[0]=size;
+	    Iterator<Integer> it=al.iterator();
+	   while(it.hasNext()){
+	       arr[x]=it.next();
+	       x++;
+	       }
+	    return arr;
+		
+		
+        }
+}
+
+public class Treeds {
+    
+
+    public static void main(String[] args) {
+        tree obj=new tree();
+              Node rt=new Node(1);
+              Node l=new Node(2);
+              rt.lChild=l;
+              Node l2=new Node(4);
+              l.lChild=l2;
+              Node r=new Node(5);
+              l.rChild=r;
+              Node r2=new Node(3);
+              rt.rChild=r2;
+              Node l3=new Node(6);
+              r2.lChild=l3;
+              Node r3=new Node(7);
+                r2.rChild=r3;
+//              System.out.println("----"+rt.lChild.rChild.nodeValue);
+//        int[] a=obj.in(rt);
+        int[] a=obj.post(rt);
+        for(int b : a) System.out.print(b+ " ");
+    }
+    
+}
