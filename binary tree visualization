@@ -1,0 +1,53 @@
+
+package binarytreepractice;
+import java.util.*;
+
+class Node {
+	int nodeValue;
+	Node lChild;
+        Node rChild;
+        Node(int data){nodeValue=data;}
+}
+
+public class Binarytreepractice {
+Node root;
+    void add(int data){
+        root=addfun(root,data);
+    }
+    static Node addfun(Node current,int data){
+        if(current==null) return new Node(data);
+        if(data<current.nodeValue) current.lChild=addfun(current.lChild,data);
+        else if(data > current.nodeValue) current.rChild=addfun(current.rChild,data);
+        else return current;
+        return current;
+    }
+    
+    boolean isbtree(Node current){
+        System.out.println("Current = "+current.nodeValue);
+        if(current==null) return true;
+        if(current.lChild!=null &&current.rChild!=null){
+            System.out.println("Current.lChild = "+current.lChild.nodeValue+" & current = "+current.nodeValue);
+            if(current.lChild.nodeValue<current.nodeValue)
+                isbtree(current.lChild);
+            else return false;
+            System.out.println("--> Current = "+current.nodeValue);
+            System.out.println("Current.rChild = "+current.rChild.nodeValue+" & current = "+current.nodeValue);
+            if(current.rChild.nodeValue>current.nodeValue)
+                isbtree(current.rChild);
+            else return false;
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        Binarytreepractice bt=new Binarytreepractice();
+        bt.add(5);
+        bt.add(3);
+        bt.add(7);
+        bt.add(1);
+        bt.add(4);
+        bt.add(6);
+        bt.add(10);
+        System.out.println(bt.isbtree(bt.root));
+    }
+    
+}
