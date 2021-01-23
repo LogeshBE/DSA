@@ -1,0 +1,50 @@
+
+package practice1;                                                                              
+
+class Node{
+    char data;//='L'
+    Node next;//=null
+    Node(char data){
+        this.data=data;
+    }
+}
+class linked{
+    Node head;//H->E->L->L->O->null
+    void add(char data){
+            Node newnode=new Node(data);//L
+            if(head==null) head=newnode;
+            else{
+                Node temp=head;//temp=H
+                while(temp.next!=null) 
+                {    temp = temp.next; }
+                temp.next=newnode;
+            }
+            
+    }
+    void display(){
+        Node n=head;
+        while(n!=null){
+            System.out.print(n.data+" -> "); //H ->E ->L ->L ->O ->null
+            n=n.next;
+        }
+        System.out.println("null");
+    }
+    
+
+}
+
+public class Practice1 {
+    
+
+    public static void main(String[] args) {
+        linked obj=new linked();
+        obj.add('H');
+        obj.add('E');
+        obj.add('L');
+        obj.add('L');
+        obj.add('O');
+        obj.display();
+       
+    }
+    
+}
