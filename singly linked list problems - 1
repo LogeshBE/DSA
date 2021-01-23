@@ -1,0 +1,366 @@
+
+package singlylinkedlist;
+import java.util.*;
+class Node{
+    char data;
+    Node next;
+    Node(char data){
+        this.data=data;
+    }
+}
+class linkedlist{
+    Node head;
+    void add(char data){
+        Node newnode=new Node(data);
+        if(head==null) head=newnode;
+        else{
+            Node n=head;
+            while(n.next!=null) n=n.next;
+            n.next=newnode;
+        }
+    }
+    void display(){
+        Node n=head;
+        if(head!=null){
+        while(n.next!=null)
+        { System.out.print(n.data +" -> ");
+          n=n.next;
+        }
+        System.out.println(n.data);
+        }
+        else System.out.println("null");
+    }
+    char twicechar(Node head){
+        Node n1=head,n2=head;
+        int count=0;
+        char a,b;
+        while(n1.next!=null) 
+        {   a=n1.data;
+            System.out.println("a = "+a);
+            while(n2.next!=null){
+                b=n2.data;
+                System.out.println("b = "+b);
+                if(a==b) count++;
+                n2=n2.next;
+            }
+            b=n2.data;
+            System.out.println("b = "+b);
+            if(a==b) count++;
+            System.out.println("count = "+count);
+            if(count>1) return a;
+            n1=n1.next;
+            n2=head;
+            count=0;
+        }
+        return n1.data;
+    }
+    Node insertAt(Node head , int index, char ch)
+    {   
+        if(head==null && index>1) return head;
+        Node newnode=new Node(ch);
+        if(index==1) {
+            newnode.next=head;
+            head=newnode;
+            return head;
+        }
+        Node n=head;
+        for(int i=1;i<index-1;i++)
+        {
+           if(n.next==null) return head; 
+           n= n.next;
+        }
+        newnode.next=n.next;
+        n.next=newnode;
+        return head;
+    }
+    public char func(Node head, Map<Character, Integer> hashMap){
+//    hashMap=new LinkedHashMap<>();
+    Node n1=head;
+    while(n1.next!=null){
+        hashMap.put(n1.data,null);
+        n1=n1.next;
+    }
+    hashMap.put(n1.data,null);
+    n1=head;
+    while(n1.next!=null){ 
+        if(hashMap.get(n1.data)==null){ hashMap.put(n1.data, 0);
+        }
+        else  return n1.data;
+        n1=n1.next;
+    }
+    if(hashMap.get(n1.data)==0) hashMap.put(n1.data, 0);
+    else  return n1.data;
+    return 'O';
+    }
+    
+    public Node func1(Node head1, Node head2,
+			Map <Character, Integer> map)
+	{
+		// write your code here
+		if(head1==null &&head2==null) return null;
+		Node n1=head1,n2=head2;
+        while(n2.next!=null){
+             System.out.println(n2.data+" *** "+map.get(n2.data));
+            if(map.get(n2.data)==null){
+                int a=0;
+                map.put(n2.data,a=a+1);
+                System.out.println(n2.data+" --if-- "+map.get(n2.data));
+            }
+            else{
+                int a=map.get(n2.data);
+                map.put(n2.data,a=a+1);
+                 System.out.println(n2.data+" --else-- "+map.get(n2.data));
+            }
+            n2=n2.next;
+        }
+        System.out.println(n2.data+" *** "+map.get(n2.data));
+        if(map.get(n2.data)==null){
+                int a=0;
+                map.put(n2.data,a=a+1);
+                System.out.println(n2.data+" --if-- "+map.get(n2.data));
+            }
+            else{
+                int a=map.get(n2.data);
+                map.put(n2.data,a=a+1);
+                 System.out.println(n2.data+" --else-- "+map.get(n2.data));
+            }
+//        map.put(n2.data,count++);
+        System.out.println("$$$ w ="+map.get('w'));
+        System.out.println("$$$ o ="+map.get('o'));
+        System.out.println("$$$ r ="+map.get('r'));
+        System.out.println("$$$ l ="+map.get('l'));
+        System.out.println("$$$ d ="+map.get('d'));
+        Node head3=null;
+        while(n1.next!=null){
+            if(map.containsKey(n1.data)){
+                System.out.println("contains of = "+n1.data);
+                int a=map.get(n1.data);
+                if(a>0){
+                    System.out.println("a = "+a);
+                    map.put(n1.data, a=a-1);
+                    System.out.println("after a = "+map.get(n1.data));
+                     Node newnode=new Node(n1.data);
+                     if(head3==null) head3=newnode;
+                     else{
+                        Node n=head3;
+                        while(n.next!=null) n=n.next;
+                        n.next=newnode;
+                    }
+                } 
+            } 
+            n1=n1.next;
+        }
+        if(map.containsKey(n1.data)){
+            System.out.println("contains of = "+n1.data);
+                int a=map.get(n1.data);
+                if(a>0){
+                     System.out.println("a = "+a);
+                    map.put(n1.data, a=a-1);
+                    System.out.println("after a = "+map.get(n1.data));
+                     Node newnode=new Node(n1.data);
+                     if(head3==null) head3=newnode;
+                     else{
+                        Node n=head3;
+                        while(n.next!=null) n=n.next;
+                        n.next=newnode;
+                    }
+                } 
+            } 
+        
+		return head3; 
+	}
+    
+    public Node intersection(Node head1,Node head2)
+	{
+		Node n1=head1,n2=head2;
+		Node head3 = null,temp = null;
+		char a,b;
+		int count1=0,count2=0;
+		while(n1.next!=null)
+		{   a=n1.data;
+//                    System.out.println(" ---- A = "+a);
+		    while(n2.next!=null)
+		    {   
+		        b=n2.data;
+//                        System.out.println("B ="+n2.data);
+		        if(a==b)
+		        {  
+//                            System.out.println(" A = "+a+" B ="+b);
+		            Node node=new Node(b);
+		            if(head3==null) head3=node;
+		            else{
+		                Node n=head3;
+		                while(n.next!=null) n=n.next;
+		                n.next=node;
+		            }
+                            if(count1==0)
+                            {
+                                head2=n2.next;
+                                count2++;
+                                break;
+                            }
+                            else{
+		            temp.next=n2.next; 
+                            n2=temp.next;
+//                            System.out.println("intemp = "+temp.data);
+//                            System.out.println("in n2 ="+n2.data);
+		            count2++;
+		            break;
+                            }
+		        }
+                        count1++;
+		        temp=n2;
+//                        System.out.println("temp = "+temp.data);
+		        n2=n2.next;
+		    }
+		    if(count2>0){
+		        n1=n1.next;
+		        n2=head2;
+                        count1=0;
+                        count2=0;
+		        continue;
+		    }
+		    b=n2.data;
+//                    System.out.println("@ B ="+n2.data);
+		    if(a==b)
+		    {   
+//                        System.out.println(" A = "+a+" B ="+b);
+		        Node node=new Node(b);
+		        if(head3==null) head3=node;
+		        else{
+		            Node n=head3;
+		            while(n.next!=null) n=n.next;
+		            n.next=node;
+		        }
+                        temp.next=null;
+//                        System.out.println("@temp = "+temp.data);
+		    }
+		    count1=0;
+                    count2=0;
+		    n1=n1.next;
+		    n2=head2;
+		    
+		}
+                a=n1.data;
+//                System.out.println(" ---- @A = "+a);
+                while(n2.next!=null){
+                    b=n2.data;
+//                    System.out.println("B ="+n2.data);
+		    if(a==b)
+		    {   
+//                        System.out.println(" A = "+a+" B ="+b);
+		        Node node=new Node(b);
+		        if(head3==null) head3=node;
+		        else{
+		            Node n=head3;
+		            while(n.next!=null) n=n.next;
+		            n.next=node;
+		        }
+//                        return head3;
+		    }
+                    n2=n2.next;
+                }
+                    b=n2.data;
+//                    System.out.println("B ="+n2.data);
+		    if(a==b)
+		    {   
+//                        System.out.println(" A = "+a+" B ="+b);
+		        Node node=new Node(b);
+		        if(head3==null) head3=node;
+		        else{
+		            Node n=head3;
+		            while(n.next!=null) n=n.next;
+		            n.next=node;
+		        }
+//                        return head3;
+		    }
+                
+		return head3; 
+	}
+    Node func2(Node str, Map<Character, Integer> map){
+        Node n=str,x=null;
+        if(str==null) return null;
+        while(n.next!=null){
+            if(map.containsKey(n.data)==false){
+                map.put(n.data, 1);
+                System.out.println(n.data+" map contains = "+map.get(n.data));
+               Node newnode=new Node(n.data);
+               if(x==null) x=newnode;
+             else{
+                 Node temp=x;
+                 while(temp.next!=null) temp=temp.next;
+                 temp.next=newnode;
+                 System.out.println("newnode = "+newnode.data);
+                 } 
+            }
+            n=n.next;
+        }
+        if(map.containsKey(n.data)==false){
+                map.put(n.data, 1);
+                System.out.println(n.data+" map contains = "+map.get(n.data));
+               Node newnode=new Node(n.data);
+               if(x==null) x=newnode;
+             else{
+                 Node temp=x;
+                 while(temp.next!=null) temp=temp.next;
+                 temp.next=newnode;
+                 System.out.println("newnode = "+newnode.data);
+                 } 
+            }
+        
+        return x;
+	}
+       Node reverse(Node ohead){
+        Node x=null;
+        while(ohead!=null){
+            Node newnode=new Node(ohead.data);
+            if(x==null) x=newnode;
+            else {newnode.next=x;
+                  x=newnode; }
+            ohead=ohead.next;
+        }
+        return x;
+    }
+}
+
+public class Singlylinkedlist {
+
+    public static void main(String[] args) {
+        linkedlist obj=new linkedlist();
+        obj.add('H');
+        obj.add('e');
+        obj.add('l');
+        obj.add('l');
+        obj.add('o');
+        obj.add('w');
+        obj.add('o');
+        obj.add('r');
+        obj.add('l');
+        obj.add('d');
+        obj.add('h');
+        obj.add('i');
+//        obj.add('H');
+//        Map<Character,Integer> hashmap=new LinkedHashMap<>();
+//        System.out.println("___________"+obj.func(obj.head, hashmap));
+//        obj.display();
+//        linkedlist obj1=new linkedlist();
+//        obj1.add('w');
+//        obj1.add('o');
+//        obj1.add('r');
+//        obj1.add('l');
+//        obj1.add('d');
+//        obj1.add('l');
+//        obj.head=obj.func1(obj.head,obj1.head, hashmap);
+//        obj.display();
+//        System.out.println("The twice char is "+obj.twicechar(obj.head));
+//        obj.head=obj.insertAt(obj.head,7,'M');
+//        obj.head=obj.intersection(obj.head, obj1.head);
+//        obj.display();
+//        obj.head=obj.func2(obj.head, hashmap);
+        obj.head=obj.reverse(obj.head);
+        obj.display();
+        
+        
+    }
+    
+}
