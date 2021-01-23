@@ -1,0 +1,86 @@
+
+package binarytree;
+import java.util.*;
+
+class Node{
+    int data;
+    Node left;
+    Node right;
+    Node(int data) {this.data=data;}
+}
+public class Binarytree {
+    Node root;
+    void add(int data){
+        root=addfun(root,data);
+    }
+    static Node addfun(Node current,int data){
+        if(current==null) return new Node(data);
+        if(data<current.data) current.left=addfun(current.left,data);
+        else if(data > current.data) current.right=addfun(current.right,data);
+        else return current;
+        return current;
+    }
+    void inorder(Node current){
+        root=inorderfun(current);
+    }
+    static Node inorderfun(Node current){
+        if(current!=null){
+            inorderfun(current.left);
+            System.out.print(current.data+" ");
+            inorderfun(current.right);
+        }
+        return current;
+    }
+    void postorder(Node current){
+        root=postfun(current);
+    }
+    static Node postfun(Node current){
+        if(current!=null){
+            System.out.print(current.data+" ");
+            postfun(current.left);
+            postfun(current.right);
+        }
+        return current;
+    }
+    void preorder(Node current){
+        root=prefun(current);
+    }
+    static Node prefun(Node current){
+        if(current!=null){
+            prefun(current.left);
+            prefun(current.right);
+            System.out.print(current.data+" ");
+        }
+        return current;
+    }
+    void traverseLevelOrder() {
+    if (root == null)  return;
+    Queue<Node> nodes = new LinkedList<>();
+    nodes.add(root);
+    while (!nodes.isEmpty()) {
+        Node node = nodes.remove();
+        System.out.print(node.data+" ");
+        if (node.left != null) nodes.add(node.left);
+        if (node.right != null) nodes.add(node.right);
+        }
+}
+    
+    public static void main(String[] args) {
+        Binarytree obj=new Binarytree();
+        obj.add(6);
+        obj.add(4);
+        obj.add(8);
+        obj.add(3);
+        obj.add(5);
+        obj.add(7);
+        obj.add(9);
+        obj.inorder(obj.root);
+        System.out.println();
+        obj.postorder(obj.root);
+        System.out.println();
+        obj.preorder(obj.root);
+        System.out.println();
+        obj.traverseLevelOrder();
+    }
+    
+}
