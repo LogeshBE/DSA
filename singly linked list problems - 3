@@ -1,0 +1,384 @@
+
+package singlylinkedlist3;
+
+import java.util.*;
+
+class SintNode{
+    int num;
+    SintNode nextNode;
+    SintNode(int num){ this.num=num;}
+}
+class SchNode{
+    char ch;
+    SchNode nextNode;
+    SchNode(char ch){ this.ch=ch;}
+}
+
+class linkedlist{
+    SchNode head;
+    SintNode inthead;
+    void add(char ch){
+        SchNode newnode=new SchNode(ch);
+        if(head==null) head=newnode;
+        else{
+            SchNode n=head;
+            while(n.nextNode!=null) n=n.nextNode;
+            n.nextNode=newnode;
+        }
+    }
+    void add(int num){
+        SintNode newnode=new SintNode(num);
+        if(inthead==null) inthead=newnode;
+        else{
+            SintNode n=inthead;
+            while(n.nextNode!=null) n=n.nextNode;
+            n.nextNode=newnode;
+        }
+    }
+    void display(){
+        SchNode n=head;
+        while(n!=null)
+        { 
+          System.out.print(n.ch +" -> ");
+          n=n.nextNode;
+        }
+    }
+    static SchNode reverse(SchNode ohead){
+        SchNode rhead=null;
+        while(ohead!=null){
+            SchNode newnode=new SchNode(ohead.ch);
+            if(rhead==null) rhead=newnode;
+            else{
+                newnode.nextNode=rhead;
+                rhead=newnode;
+            }
+            ohead=ohead.nextNode;
+        }
+        return rhead;
+    }
+    static int size(SchNode head){
+        int size=0;
+        while(head!=null){
+            head=head.nextNode;
+            size++;
+        }
+        return size;
+    }
+    
+    SchNode func(SchNode str, int l){
+            
+    SchNode head1=str,head2=null,x=null,ohead=null,t=null;
+    int size=size(head1);
+    int rotate=l%size,count=0;
+    if(rotate==0) return head1;
+    else{
+        SchNode n=reverse(head1);
+        while(n!=null){
+           SchNode newnode=new SchNode(n.ch);
+           if(head2==null) head2=newnode;
+           else{
+               x=head2;
+               while(x.nextNode!=null) x=x.nextNode;
+               x.nextNode=newnode;
+           }
+           count++;
+           t=n;
+           if(count==rotate) break;
+           else n=n.nextNode;
+        }
+        head2=reverse(head2);
+        SchNode m;
+        t=t.nextNode;
+        System.out.println("t value = "+t.ch);
+        m=t;
+        while(m!=null) 
+        {  SchNode newnode=new SchNode(m.ch);
+          if(ohead==null) ohead=newnode;
+          else{
+              SchNode n1=ohead;
+              while(n1.nextNode!=null) n1=n1.nextNode;
+              n1.nextNode=newnode;
+             }
+          m=m.nextNode;
+        }
+        ohead=reverse(ohead);
+        SchNode n2=head2;
+        while(n2.nextNode!=null) n2=n2.nextNode;
+        n2.nextNode=ohead;
+    }
+    return head2;
+    }
+    SchNode func1(SchNode str){
+        SchNode head=null;
+        int count=0;
+        while(str!=null){
+            char a=str.ch;
+            System.out.println("a = "+a);
+            System.out.println("$count = "+count);
+            if(Character.isDigit(str.nextNode.ch)){
+                str=str.nextNode;
+                while(Character.isDigit(str.ch)){
+                    int b=Integer.parseInt(String.valueOf(str.ch));
+                    System.out.println("b = "+b);
+                     if(count > 0) count= b*10+count;
+                     else count=b;
+                     System.out.println("count = "+count);
+                     if(str.nextNode==null) {
+                         str=str.nextNode;
+                         break;
+                     }
+                     else  str=str.nextNode;
+                }
+                
+                while(count!=0){
+                    System.out.println("#count = "+count);
+                    SchNode newnode=new SchNode(a);
+                    if(head==null) head=newnode;
+                    else{
+                        SchNode n=head;
+                        while(n.nextNode!=null) n=n.nextNode;
+                        n.nextNode=newnode;
+                    }
+                    count--;
+                }
+            }
+            else{
+                System.out.println("***");
+                SchNode newnode=new SchNode(a);
+                if(head==null) head=newnode;
+                else{
+                    SchNode n=head;
+                    while(n.nextNode!=null) n=n.nextNode;
+                    n.nextNode=newnode;
+                }
+                str=str.nextNode;
+            }
+            count=0;
+        }
+        return head;
+	}
+    SchNode func2(SchNode str){
+        SchNode head=null;
+        int count=1;
+        while(str!=null){
+            char a=str.ch;
+            SchNode newnode1=new SchNode(a);
+            if(head==null) head=newnode1;
+            else{
+                SchNode n=head;
+                while(n.nextNode!=null) n=n.nextNode;
+                n.nextNode=newnode1;
+            }
+            if(str.nextNode!=null) {
+                str=str.nextNode;
+                char b=str.ch;
+                count=1;
+                while(a==b){
+                    count++;
+                    str=str.nextNode;
+                    if(str==null) break;
+                    else b=str.ch;
+                }
+                if(count>1 && count < 9){
+                SchNode newnode2=new SchNode(Character.forDigit(count,10));
+                SchNode n=head;
+                while(n.nextNode!=null) n=n.nextNode;
+                n.nextNode=newnode2;
+                }
+                else if(count>9){
+                    int rem=count%10;
+                     count=count/10;
+                    SchNode newnode3=new SchNode(Character.forDigit(rem,10));
+                    SchNode newnode4=new SchNode(Character.forDigit(count,10));
+                    SchNode n=head;
+                    while(n.nextNode!=null) n=n.nextNode;
+                    n.nextNode=newnode4;
+                    newnode4.nextNode=newnode3;
+                }
+                
+            }
+            else str=str.nextNode;
+            
+        }
+        return head;
+	}
+    SchNode func3(SchNode str){
+     int size=size(str);
+        System.out.println("&size ="+size);
+     int limit=size/2,count=0;
+        System.out.println("&&limit =+"+size%2);
+     SchNode head1=null,head2=null,ohead=null;
+     while(str!=null){
+         if(count<limit){
+             System.out.println("+++++= "+str.ch);
+         SchNode newnode=new SchNode(str.ch);
+         if(head1==null) head1=newnode;
+         else{
+             newnode.nextNode=head1;
+             head1=newnode;
+         }
+         count++;
+         }
+         else {
+             break;
+         }
+         str=str.nextNode;
+     }
+     if(size%2==0){
+         while(str!=null){
+         SchNode newnode=new SchNode(str.ch);
+         if(head2==null) head2=newnode;
+         else{
+             newnode.nextNode=head2;
+             head2=newnode;
+         }
+         str=str.nextNode;
+     }
+      SchNode n=head1;
+      while(n.nextNode!=null) n=n.nextNode;
+      n.nextNode=head2;
+     }
+     else{
+         while(str!=null){
+             System.out.println("&limit = "+limit);
+             System.out.println("&count = "+count);
+         if(count<limit){
+             System.out.println("&count = "+count);
+         SchNode newnode=new SchNode(str.ch);
+         if(head1==null) head1=newnode;
+         else{
+             newnode.nextNode=head1;
+             head1=newnode;
+         }
+         count++;
+         }
+         else {
+//             str=str.nextNode;
+             SchNode newnode=new SchNode(str.ch);
+             ohead=newnode;
+             System.out.println("ohead = "+ohead.ch);
+             break;
+         }
+         str=str.nextNode;
+     }
+     while(str!=null){
+         SchNode newnode=new SchNode(str.ch);
+         if(head2==null) head2=newnode;
+         else{
+             newnode.nextNode=head2;
+             head2=newnode;
+         }
+         str=str.nextNode;
+     }
+      SchNode n=head1;
+      while(n.nextNode!=null) n=n.nextNode;
+      n.nextNode=ohead;
+      ohead.nextNode=head2;
+     }
+     return head1;
+	}
+    public char func4(SchNode head, Map<Character, Integer> hashMap)
+	{   int max=0;
+	    char mletter='L';
+	    SchNode n=head;
+		while(n!=null){
+		    if(hashMap.containsKey(n.ch)){
+//                        System.out.println("if n = "+n.ch);
+		        int a=(hashMap.get(n.ch))+1;
+//                        System.out.println("a = "+a);
+		        hashMap.put(n.ch,a);
+//                        System.out.println("@ = "+hashMap.get(n.ch));
+		    }
+                    else{
+//                        System.out.println("else n = "+n.ch);
+                        hashMap.put(n.ch,1);
+                    }
+		    n=n.nextNode;
+		}
+		n=head;
+		while(n!=null){
+                    System.out.println(n.ch+"--> "+hashMap.get(n.ch));
+		    if(hashMap.get(n.ch)>max){
+                        System.out.println("max = "+max);
+		        max=hashMap.get(n.ch);
+                        System.out.println("max@ = "+max);
+		        mletter=n.ch;
+		    }
+		    n=n.nextNode;
+		}
+		
+		
+		return mletter; 
+	}
+    public int func5(SintNode head, int sum, Map<Integer, Integer> map)
+	{
+		int count=0;
+		SintNode n1=head,n2=null;
+		while(n1!=null){
+		    map.put(n1.num,1);
+		    n1=n1.nextNode;
+		}
+		n1=head;
+		while(n1.nextNode!=null){
+		    if(map.get(n1.num)==0){
+		        n1=n1.nextNode;
+		        continue;
+		    }
+//                    System.out.println("----");
+		    n2=n1.nextNode;
+		    while(n2!=null){
+		        if(map.get(n2.num)==0){
+		            n2=n2.nextNode;
+		            continue;
+		        }
+//                        System.out.println("$$$$");
+//                        System.out.println("n1 -> "+n1.num);
+//                        System.out.println("n2 -> "+n2.num);
+		        if(n1.num+n2.num==sum){
+		            map.put(n1.num,0);
+		            map.put(n2.num,0);
+		            count++;
+                            System.out.println("%%__>"+count);
+		            break;
+		        }
+		        n2=n2.nextNode;
+		    }
+		    n1=n1.nextNode;
+		}
+		return count; 
+	}
+}   
+public class Singlylinkedlist3 {
+
+    public static void main(String[] args) {
+        linkedlist obj=new linkedlist();
+//        obj.add('H');
+//        obj.add('e');
+//        obj.add('l');
+//        obj.add('l');
+//        obj.add('o');
+//        obj.add(' ');
+//        obj.add('B');
+//        obj.add('y');
+//        obj.add('e');
+//        obj.add('d');
+        obj.add(0);
+        obj.add(2);
+        obj.add(5);
+        obj.add(7);
+        obj.add(4);
+        obj.add(6);
+        obj.add(10);
+        obj.add(20);
+        obj.add(-10);
+//        System.out.println("size = "+linkedlist.size(obj.head));
+//        obj.head=obj.func1(obj.head);
+//        obj.head=obj.func3(obj.head);
+//        HashMap<Character,Integer> map=new HashMap<>();
+        HashMap<Integer,Integer> map=new HashMap<>();
+//        System.out.println(obj.func4(obj.head, map));
+        System.out.println(obj.func5(obj.inthead,10,map));
+//        obj.display();
+    }
+    
+}
