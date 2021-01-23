@@ -1,0 +1,64 @@
+
+package sorting;
+import java.util.*;
+public class quicksort {
+    static int conquer(int[] arr,int low,int high){
+        int pivot=arr[high];
+        int i=low-1;
+        System.out.println("Pivot elemrnt = "+pivot+ " i = "+i);
+        
+        for(int j=low;j<high;j++){
+            if(arr[j] < pivot){
+                i++;
+                System.out.println("i = "+i+" j = "+j);
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+            }
+        }
+        System.out.println(" temp = "+arr[i+1]+" arr[high] = "+arr[high]);
+        int temp=arr[i+1];
+        arr[i+1]=arr[high];
+        arr[high]=temp;
+        return (i+1);
+    }
+    static int conquerfirstpivot(int[] arr,int low,int high){
+        int pivot=arr[low];
+        int i=low+1,j=high;
+        while(i<j){
+            while(arr[i]<=pivot && i < high) i++;
+            while(arr[j] > pivot) j--;
+            if(i < j){
+//                System.out.println("Swap arr[i] = "+arr[i]+" and arr[j] = "+arr[j]);
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+            }
+        }
+//        System.out.println(" -> Swap pivot = "+arr[low]+" and arr[j] = "+arr[j]);
+        int temp=pivot;
+        arr[low]=arr[j];
+        arr[j]=pivot;
+//        System.out.println("&& j = "+j+" arr[j] = "+arr[j]);
+//        for(int x : arr) System.out.print(x+" ");
+        return j;
+    }
+    static void divide(int[] arr,int low,int high){
+        if(low<high){
+//            System.out.println("low = "+low+" high = "+high);
+//            int pivot=conquer(arr,low,high);
+            int pivot=conquerfirstpivot(arr,low,high);
+//            System.out.println("pivot = "+pivot+" low = "+low+" high = "+high);
+            divide(arr,low,pivot-1);
+//             System.out.println("--> pivot = "+pivot+" low = "+low+" high = "+high);
+            divide(arr,pivot+1,high);
+            
+        }
+    }
+    void quick(){
+        int[] arr={10,2,8,5,6,5,4,3,9,7};
+        divide(arr,0,arr.length-1);
+        for(int x : arr) System.out.print(x+" ");
+        
+    }
+}
