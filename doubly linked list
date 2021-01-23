@@ -1,0 +1,95 @@
+
+package doublylinkedlist;
+
+class Node{
+    char data;
+    Node previous;
+    Node next;
+    Node(char data){
+        this.data=data;
+    }
+}
+class doublyll{
+     Node head,tail;
+     void add(char data){
+         Node newnode=new Node(data);
+        if(head==null) 
+            head=tail=newnode;
+        else {
+            Node n=head;
+            while(n.next!=null) n=n.next;
+            n.next=newnode;
+            newnode.previous=n;   
+        }
+     }
+     void display(){
+         Node n=head;
+         while(n.next!=null){
+             System.out.print(n.data+" -> ");
+             n=n.next;
+         }
+         System.out.println(n.data);
+     }
+     void reverse(){
+         System.out.println("REVERSE OF THE LINKED LIST");
+         Node n=head;
+         while(n.next!=null) n=n.next;
+         while(n.previous!=null) {
+             System.out.print(n.data + " <- ");
+             n=n.previous;
+         }
+         System.out.println(n.data);
+     }
+     Node func(Node head, int index, char ch)
+	{
+		 if(head==null && index>1) return null;
+	    Node newnode=new Node(ch);
+	    if(index==1)
+	    {
+	        newnode.next=head;
+	        head.previous=newnode;
+	        head=newnode;
+	        return head;
+	    }
+	    Node n=head,n2,n3;
+	    for(int i=1;i<index-1;i++)
+	    {
+	        if(n.next==null) return head;
+	        n=n.next;
+	    }
+            if(n.next!=null) {
+	    newnode.next=n.next;
+	    n3=newnode.next;
+	    n.next=newnode;
+	    n2=n;
+	    newnode.previous=n2;
+	    n3.previous=newnode;
+            }
+            else {
+                n.next=newnode;
+                newnode.previous=n;
+            }
+	    
+		return head; 
+	}
+}
+
+public class DoublyLinkedList {
+
+    public static void main(String[] args) {
+        doublyll obj1=new doublyll();
+        obj1.add('a');
+        obj1.add('b');
+        obj1.add('c');
+        obj1.add('d');
+        obj1.add('e');
+        obj1.display();
+        System.out.println("#####----> "+obj1.head.next.next.next.next.previous.previous.previous.previous.data);
+//        System.out.println("The tail of obj1 is - "+obj1.tail.data);
+        obj1.head=obj1.func(obj1.head, 1, 'y');
+//        obj1.reverse();
+        obj1.display();
+       
+    }
+    
+}
