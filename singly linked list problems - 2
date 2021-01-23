@@ -1,0 +1,86 @@
+
+package singlylinkedlist2;
+
+class Node{
+    char data;
+    Node next;
+    Node(char data){
+        this.data=data;
+    }
+}
+class linkedlist{
+    Node head;
+    void add(char data){
+        Node newnode=new Node(data);
+        if(head==null) head=newnode;
+        else{
+            Node n=head;
+            while(n.next!=null) n=n.next;
+            n.next=newnode;
+        }
+    }
+    void display(){
+        Node n=head;
+        while(n!=null)
+        { System.out.print(n.data +" -> ");
+          n=n.next;
+        }
+    }
+    Node removeelementinlist(Node head1,Node head2){
+        Node x=null;
+        Node h2=head2;
+        int count=0;
+        while(head1!=null){
+            char a=head1.data;
+            while(head2!=null){
+                char b=head2.data;
+                if(a==b) count++;
+                head2=head2.next;
+            }
+            if(count==0){
+                Node newnode=new Node(a);
+                if(x==null) x=newnode;
+                else{
+                    Node n=x;
+                    while(n.next!=null) n=n.next;
+                    n.next=newnode;
+                }
+            }
+            count=0;
+            head2=h2;
+            head1=head1.next;
+        }
+        return x;
+    }
+}
+
+public class Singlylinkedlist2 {
+
+    public static void main(String[] args) {
+        
+        linkedlist obj=new linkedlist();
+        obj.add('H');
+        obj.add('e');
+        obj.add('l');
+        obj.add('l');
+        obj.add('o');
+        obj.add('w');
+        obj.add('o');
+        obj.add('r');
+        obj.add('l');
+        obj.add('d');
+//        obj.add('h');
+//        obj.add('i');
+        linkedlist obj1=new linkedlist();
+        obj1.add('l');
+        obj1.add('o');
+        obj.display();
+        System.out.println();
+        obj1.display();
+        System.out.println();
+        obj1.head=obj1.removeelementinlist(obj.head, obj1.head);
+        obj1.display();
+        
+    }
+    
+}
