@@ -1,0 +1,83 @@
+
+package stackpractice;
+import java.util.*;
+public class Stackpractice {
+    
+    public String infixtopostfix (String str){
+	char[] a=str.toCharArray();
+        StringBuffer sb=new StringBuffer();
+        Stack<Character> stack=new Stack<>();
+        int x=0;
+	for(int i=0;i<a.length;i++){
+	    if(Character.isLetter(a[i])){
+                sb.insert(x, a[i]);
+                x++;
+            }
+            else if(a[i]=='*'||a[i]=='/'||a[i]=='%'|| a[i]=='+' || a[i]=='-'
+                   || a[i]=='(' || a[i]==')'){
+            if(stack.isEmpty() || a[i]=='(') stack.push(a[i]);
+            else if(a[i]=='*'||a[i]=='/'||a[i]=='%') stack.push(a[i]);
+            else if(a[i]=='-'){
+                    if(stack.peek()!='('|| stack.peek()=='*' ||stack.peek()=='/' ||stack.peek()=='%' || stack.peek()=='+'){
+                            sb.insert(x,stack.pop());
+                             x++;
+                            stack.push(a[i]);
+                    }
+                    else stack.push(a[i]);
+                
+            }
+            else if(a[i]=='+'){
+                    if(stack.peek()!='('|| stack.peek()=='*' ||stack.peek()=='/' ||stack.peek()=='%'){
+                            sb.insert(x,stack.pop());
+                             x++;
+                            stack.push(a[i]);
+                    }
+                    else stack.push(a[i]);
+                
+            }
+            else if(a[i]==')'){
+                while(stack.peek()!='('){
+                    sb.insert(x,stack.pop());
+                    x++;
+                }
+                stack.pop();
+            }
+        }
+	}
+        while(stack.isEmpty()==false){
+            sb.insert(x,stack.pop());
+            x++;
+        }
+        return sb.toString();
+	}
+    
+    public String postfixtoinfix (String str){
+         char[] a=str.toCharArray();
+        StringBuffer sb=new StringBuffer();
+        String s1,s2,s3;
+        Stack<String> stack=new Stack<>();
+        for(int i=0;i<a.length;i++){
+            if(Character.isLetter(a[i])) stack.push(Character.toString(a[i]));
+            else{
+                s2=stack.pop();
+//                System.out.println("s2 = "+s2);
+                s1=stack.pop();
+//                System.out.println("s1 = "+s1);
+                str='('+s1+a[i]+s2+')';
+//                System.out.println("str = "+str);
+                stack.push(str);
+            }
+        }
+	  return stack.pop();
+	}
+
+
+    public static void main(String[] args) {
+        Stackpractice obj=new Stackpractice();
+//        System.out.println(obj.infixtopostfix("A*(B+C)+D"));
+//        System.out.println(obj.infixtopostfix("A/(B*C)-D+(A/D)"));
+//        System.out.println(obj.infixtopostfix("A+B-C*D/E"));
+        System.out.println(obj.postfixtoinfix("ABC+*D+"));
+    }
+    
+}
